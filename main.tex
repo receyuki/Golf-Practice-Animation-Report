@@ -56,32 +56,63 @@ test
 
 
 \section{Hardware design}
-
+Sample formula
+\begin{align}
+    S_{21}&=\frac{b_2}{a_1}|_{a_2=0}\\
+    where\ a_1=\frac{V_1+I_1Z_0}{2\sqrt{Z_0}}\ &and\ b_2=\frac{V_2-I_2Z_0}{2\sqrt{Z_0}}\\
+    S_{21}&=\frac{\frac{V_2-I_2Z_0}{2\sqrt{Z_0}}}{\frac{V_1+I_1Z_0}{2\sqrt{Z_0}}}\\
+    S_{21}&=\frac{V_2-I_2Z_0}{V_1+I_1Z_0}\\
+    S_{21}&=\frac{V_2+I_1Z_0}{V_1+I_1Z_0}\\
+    S_{21}&=\frac{\frac{V_2}{I_1}+Z_0}{\frac{V_1}{{I_1}}+Z_0}\\
+    S_{21}&=\frac{Z_L+Z_0}{Z_L+Z+Z_0}\\
+    S_{21}&=\frac{Z_0+Z_0}{Z_0+Z+Z_0}\ since\ Z_G=Z_L=Z_0\\
+    S_{21}&=\frac{2Z_0}{Z+2Z_0}\\
+    Q.E.D.
+\end{align}
 
 \subsection{radar selection}
 \subsection{amplifying filter circuit design}
 \subsection{power supply circuit design}
 \subsection{offset circuit design}
 
-
+\newpage
 \section{Software design}
+The back-end software of the project runs on a single board computer (Raspberry Pi 4). The front-end software of the project is designed to run on mainstream operating systems or platforms such as iOS, Android, Windows and macOS. Through the modular design, each module can be developed using the most suitable programming language to achieve the best development efficiency and maintainability. About three thousand lines of code including C, python and C\# constitute the software part of the project. The software design of this project needs to have the following functions: 
+\begin{itemize}[noitemsep,topsep=0pt]
+   \item  Read ADC data through SPI protocol
+   \item Analyse the radar data to get the launch speed and angle of the ball
+   \item Compute the flight trajectory of the golf ball from the launch speed and angle
+   \item Display flight trajectory on any supported front-end device
+\end{itemize}
+   
+Ideally, the back-end system is designed to run automatically without user action after the power is turned on. The front-end system needs to have an easy-to-use graphic user interface for users to operate.
 
-\subsection{Software architecture}
+\subsection{Software Architecture}
+The back-end server of this project is based on Raspberry Pi OS (formerly Raspbian), which is a Debian derivative for Raspberry Pi. The stability and large open-source community of Debian bring convenience to the project development. The front-end application is based on the Unity 3D engine. This engine was selected because of its cross-platform portability.
+\\
+Due to the impact of the epidemic, the communication and cooperation of the project team are affected by the level 3 restrictions and time difference. Through object-oriented programming, different modules can be assigned to different team members. By deploying Git for version control, and the use of low coupling and high cohesion program design, the impact of the epidemic on teamwork is minimised.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figure/Software.pdf}
+    \caption{Software Architecture Diagram}
+    \label{fig:software_diagram}
+\end{figure}
+The software architecture diagram is shown in Figure \ref{fig:software_diagram}. The back-end server contains three modules. The data reading module is responsible for operating the ADC. The signal processing module is used to compute the flight trajectory from the radar signal. The transmission module is responsible for communicating with the front-end device. The front-end application contains two modules. The transmission module communicates with the back-end server, and the visualisation module displays the flight trajectory on the user interface
+\subsection{ADC Reading}
+\subsubsection{SPI protocol}
+
+\subsection{Signal Processing}
+琼慧写
+\subsection{Trajectory Simulation}
+琼慧写
+\subsection{Wireless Communication Solution}
+
+\subsubsection{Communication Protocol selection}
+
+\subsubsection{Bluetooth Communication module}
 
 
-\subsection{Signal processing}
-
-\subsection{Trajectory simulation}
-
-\subsection{Wireless communication solution}
-
-\subsubsection{communication protocol selection}
-
-
-\subsubsection{Bluetooth communication module}
-
-
-\subsubsection{Data compression}
+\subsubsection{Data Compression}
 
 
 

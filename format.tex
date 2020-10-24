@@ -8,8 +8,7 @@
 \usepackage{graphicx}       % Required for the inclusion of images
 \usepackage[shortlabels]{enumitem}
 \usepackage[T1]{fontenc}
-\usepackage{geometry}
-\geometry{a4paper, total={6in, 8in}, margin=25mm} %margins
+\usepackage[a4paper, total={6in, 8in}, margin=25mm]{geometry} %margins
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=black, citecolor=black}
 \usepackage{tocloft}
@@ -19,7 +18,7 @@
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \fancyhead{}
-\lfoot{\fontsize{9}{9} \selectfont EMI Capstone Final Report (ENGR90038)\\ Copyright © \theauthor, 2020}
+\lfoot{\fontsize{9}{9} \selectfont EMI Capstone Final Report (ENGR90038)\\ Copyright © Qionghui Cai, Yifan Xing, Zijie Yang, 2020}
 \cfoot{\fontsize{9}{9} \selectfont \today}
 \rfoot{\fontsize{9}{9} \selectfont Page \thepage \ of \pageref{LastPage}}
 
@@ -65,3 +64,10 @@ BoldItalicFont=arialbi.ttf
 
 \usepackage[style=apa]{biblatex}
 \addbibresource{ref.bib}
+
+\titlespacing*{\section}
+{0pt}{0pt}{0pt}
+\titlespacing*{\subsection}
+{0pt}{0pt}{0pt}
+
+\setlength{\belowcaptionskip}{-10pt}
