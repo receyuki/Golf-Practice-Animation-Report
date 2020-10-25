@@ -56,19 +56,7 @@ test
 
 
 \section{Hardware design}
-Sample formula
-\begin{align}
-    S_{21}&=\frac{b_2}{a_1}|_{a_2=0}\\
-    where\ a_1=\frac{V_1+I_1Z_0}{2\sqrt{Z_0}}\ &and\ b_2=\frac{V_2-I_2Z_0}{2\sqrt{Z_0}}\\
-    S_{21}&=\frac{\frac{V_2-I_2Z_0}{2\sqrt{Z_0}}}{\frac{V_1+I_1Z_0}{2\sqrt{Z_0}}}\\
-    S_{21}&=\frac{V_2-I_2Z_0}{V_1+I_1Z_0}\\
-    S_{21}&=\frac{V_2+I_1Z_0}{V_1+I_1Z_0}\\
-    S_{21}&=\frac{\frac{V_2}{I_1}+Z_0}{\frac{V_1}{{I_1}}+Z_0}\\
-    S_{21}&=\frac{Z_L+Z_0}{Z_L+Z+Z_0}\\
-    S_{21}&=\frac{Z_0+Z_0}{Z_0+Z+Z_0}\ since\ Z_G=Z_L=Z_0\\
-    S_{21}&=\frac{2Z_0}{Z+2Z_0}\\
-    Q.E.D.
-\end{align}
+
 
 \subsection{radar selection}
 \subsection{amplifying filter circuit design}
@@ -76,10 +64,95 @@ Sample formula
 \subsection{offset circuit design}
 
 \newpage
+\section{Prediction Model}
+\subsection{Kinematic Model}
+The flying golf ball is mainly affected by gravity, drag force from air resistance, buoyancy and magnus force, showed as figure. Among them, the strength of magnus force is related to the rotational speed, difficult to be measured. The magnitude of the buoyancy is two orders smaller than the gravity and drag force, which is usually can be neglected.
+Gravity is caused by the attraction force of the earth, always with a direction going straight down. It can be defined by the equation:
+\begin{align}
+F_{g}=m g
+\end{align}
+When the golf is flying, its surrounding air exerts a drag on it to push it back, opposite to the direction of velocity. This drag force has a nonlinear relationship with the velocity.
+\begin{align}
+\vec{F}_{d}=-\frac{1}{2} C_{D} \rho A v^{2} \frac{\vec{v}}{|v|}
+\end{align}
+where C$_D$ is the drag coefficient, with a common value 0.4. $\rho$ is air density, equaling to 1.23kg/m $^3$. A is the cross section area of the ball,related to the radius of golf ball. Typically, the radius of golf is
+
+
+\subsection{Velocity Calculation}
+Let’s assume the flying object is R distance away from the receiving antennas. The numbers of wavelength corresponding to the distance back and forth is:
+\begin{align}
+n=\frac{2 R}{\lambda}    
+\end{align}
+wavelength is define as:
+\begin{align}
+\lambda=\frac{c}{f_{t}}
+\end{align}
+Where $c=3 \times 10^{8} ; f_{t}=24 G H z$in this project\\
+Since a wavelength means a 2 $\pi$ phase transformation. The total phase change is:
+\begin{align}
+\phi=2 \pi\left(\frac{2 R}{\lambda}\right)=4 \pi R / \lambda
+\end{align}
+The angular frequency refers to the rate of phase change when distance R varies over time. That is:
+\begin{align}
+\omega_{d}=\frac{d \phi}{d t}=\frac{4 \pi}{\lambda} \frac{d R}{d t}=\frac{4 \pi V_{r}}{\lambda}=2 \pi f_{d}
+\end{align}
+where $V_{r}=d R / d t$ and $f_{d}$ is Doppler frequency.\\
+Rearrange the above equation, we get:
+\begin{align}
+V_{r}=\frac{\lambda}{2} f_{d}=V \cos \Theta
+\end{align}
+The velocity we get above is the radial velocity with angle $/theta$ with respect to the ground. Since the most critical value we need is the initial velocity infinitely approaching the swing point. The angle $/theta$ can be considered as 0 degree. That is:
+\begin{align}
+V=\frac{\lambda}{2} f_{d}
+\end{align}
+
+
+\subsection{Angle Calculation}
+The main method we used to get angle is phase comparison method. Showed as figure , two antennas in the same direction separated by d meter receive the same ratio signal transmitting through directive antenna. The return signals received have same amplitude but different phases. Take the earth ground as the horizontal line. Assume the flying direction of the target is $\theta$, the phase difference should be:
+\begin{align}
+\begin{split}
+\Delta \phi=2 \pi \frac{d}{\lambda} \sin \theta\\
+\theta=\arcsin \frac{\lambda \Delta \phi}{2 \pi d}
+\end{split}
+\end{align}
+In this project, a special 3-dimensions coordinate system with three axes is adopted. X axis represents the left and right space. Z axis represents the front and back space. Y axis represents the up and down space. In this way, the position of the flying ball will involve two angles. One is called azimuth related to x and z axes. The other one is called elevation, the angle between the golf and the horizon. Showed as figure.
+
+
+\subsection{Kinematic Model}
+Velocity decompose into x,y and z axis:
+\begin{align}
+\begin{split}
+    V_{x}&=V \cdot \cos \alpha \cdot \cos \theta\\
+    V_{z}&=V \cdot \cos \alpha \cdot \sin \theta\\
+    V_{y}&=V \cdot \sin \theta    
+\end{split}
+\end{align}
+According to the kinematic model and Newton’s second law:\\
+x axis:
+when $v_{x 0}>0$
+\begin{align}
+    m \frac{\partial^{2} x}{\partial t^{2}}=-k\left(\frac{\partial x}{\partial t}\right)^{2}
+\end{align}
+The initial conditions of above equations are:
+\begin{align}
+    \left.x\right|_{t=0}=0,\ \left.v_{x}\right|_{t=0}=v_{0 x}
+\end{align}
+where
+\begin{align*}
+      m &-- the mass of golf,kg\\
+      g &-- gravitational acceleration, 9.8m/s^2\\
+      t &-- flying time, s\\
+      k &-- friction coefficient between the golf and air\\
+      x,y,z &--the trajectory coordinate of golf at t moment   
+\end{align*}
+
+
+
+\newpage
 \section{Software design}
 The back-end software of the project runs on a single board computer (Raspberry Pi 4). The front-end software of the project is designed to run on mainstream operating systems or platforms such as iOS, Android, Windows and macOS. Through the modular design, each module can be developed using the most suitable programming language to achieve the best development efficiency and maintainability. About three thousand lines of code including C, python and C\# constitute the software part of the project. The software design of this project needs to have the following functions: 
 \begin{itemize}[noitemsep,topsep=0pt]
-   \item  Read ADC data through SPI protocol
+   \item Read ADC data through SPI protocol
    \item Analyse the radar data to get the launch speed and angle of the ball
    \item Compute the flight trajectory of the golf ball from the launch speed and angle
    \item Display flight trajectory on any supported front-end device
