@@ -48,8 +48,7 @@
 
 \subsection{Test}
 \subsubsection{Test}
-test \textcite{dirac} test
-test
+
 
 
 \section{Literature Review}
@@ -64,6 +63,21 @@ test
 \subsection{offset circuit design}
 
 \newpage
+Radar\\
+Radar is an electromagnetic system emitting and receiving radio signals to detect and measure objects’ information within its detectable range. There are two main types of radar, pulse wave and continuous-wave(CW). Pulse radar will not send the next pulse until it completes each transmitting and receiving cycle. One antenna is enough to satisfy all operating requirements. On the contrary, CW radar needs one more antenna. Because it can emit a signal and receive another return signal at the same time. Compared with pulse wave radar, CW radar does better in the simplification of microwave filtering due to its narrower transmitted spectrum. Also, it can handle almost all objects with controllable speed at any distance. Considering these factors, CW radar is adopted in this project. 
+
+The Doppler Effect of CW radars can be used to calculate the velocity and angles of the golf. Doppler frequency refers to the change of frequency when an object moves along a direction due to the difference in its travel distance. The Doppler frequency becomes lower when the object is heading away from the radar with a smaller frequency return signal.Showed as figure\\
+Doppler frequency f$_d$ can be expressed as
+\begin{align}
+    f_{d}=f_{r}-f_{t}
+\end{align}
+where $\lambda$ is wavelength,f$_r$ is the frequency of received signal and f$_t$ is the frequency of transmitting signal.
+When the receiver and sound source are close to each other, the receiving frequency is greater than the transmitting frequency. That is f$_d$ > 0.
+Otherwise, f$_d$ < 0.
+
+
+
+\newpage
 \section{Prediction Model}
 \subsection{Kinematic Model}
 The flying golf ball is mainly affected by gravity, drag force from air resistance, buoyancy and magnus force, showed as figure. Among them, the strength of magnus force is related to the rotational speed, difficult to be measured. The magnitude of the buoyancy is two orders smaller than the gravity and drag force, which is usually can be neglected.
@@ -71,6 +85,7 @@ Gravity is caused by the attraction force of the earth, always with a direction 
 \begin{align}
 F_{g}=m g
 \end{align}
+where m is the mass of golf,kg;g is gravitational acceleration, 9.8m/s$^2$.\\
 When the golf is flying, its surrounding air exerts a drag on it to push it back, opposite to the direction of velocity. This drag force has a nonlinear relationship with the velocity.
 \begin{align}
 \vec{F}_{d}=-\frac{1}{2} C_{D} \rho A v^{2} \frac{\vec{v}}{|v|}
@@ -101,7 +116,7 @@ Rearrange the above equation, we get:
 \begin{align}
 V_{r}=\frac{\lambda}{2} f_{d}=V \cos \Theta
 \end{align}
-The velocity we get above is the radial velocity with angle $/theta$ with respect to the ground. Since the most critical value we need is the initial velocity infinitely approaching the swing point. The angle $/theta$ can be considered as 0 degree. That is:
+The velocity we get above is the radial velocity with angle $/theta$ with respect to the ground. Since the most critical value we need is the initial velocity infinitely approaching the swing point. The angle $\theta$ can be considered as 0 degree. That is:
 \begin{align}
 V=\frac{\lambda}{2} f_{d}
 \end{align}
@@ -135,22 +150,142 @@ when $v_{x 0}>0$
 \end{align}
 The initial conditions of above equations are:
 \begin{align}
-    \left.x\right|_{t=0}=0,\ \left.v_{x}\right|_{t=0}=v_{0 x}
+    \left.x\right|_{t=0}=0,\ \left.v_{x}\right|_{t=0}=v_{x 0}
 \end{align}
-where
-\begin{align*}
-      m &-- the mass of golf,kg\\
-      g &-- gravitational acceleration, 9.8m/s^2\\
-      t &-- flying time, s\\
-      k &-- friction coefficient between the golf and air\\
-      x,y,z &--the trajectory coordinate of golf at t moment   
-\end{align*}
-
-
-
+where\\
+m -- the mass of golf,kg\\
+g -- gravitational acceleration, 9.8m/s$^2$\\
+t -- flying time, s\\
+k -- friction coefficient between the golf and air\\
+x,y,z --the trajectory coordinate of golf at t moment \\
+Substituting $v_{x}=\frac{\partial x}{\partial t}$ into equation (11), we have:
+\begin{align}
+    m \frac{\partial v_{x}}{\partial t}=-k v_{x}^{2}
+\end{align}
+Separate the variable V$_x$ from the equation (13) and integrate both sides of this equation. Also, apply the initial condition $\left.v_{x}\right|_{t=0}=v_{0 x}$. The analytic solution of this partial differential equation is:
+\begin{align}
+    v_{x}=\frac{m v_{x 0}}{m+k v_{x 0} t}
+\end{align}
+Again, separate the variable x and apply the initial conditions $\left.x\right|_{t=0}=0$:
+\begin{align}
+    x=\frac{m}{k} \ln \left(1+\frac{k v_{x 0} t}{m}\right)+x_{0}
+\end{align}
+When $v_{x 0}<0$:
+\begin{align}
+    m \frac{d v_{x}}{d t}=k v_{x}^{2}
+\end{align}
+Integrate above equation
+\begin{align}
+    v_{x}=\frac{v_{x 0} m}{m-k v_{x 0} t}
+\end{align}
+Integrate above equation
+\begin{align}
+y=\frac{-m}{k} \ln \left(1-\frac{k v_{x 0} t}{m}\right)+x_{0}
+\end{align}
+z axis:when $v_{z 0}>0$
+\begin{align}
+    m \frac{\partial^{2} z}{\partial t^{2}}=-k\left(\frac{\partial z}{\partial t}\right)^{2}\\
+\end{align}
+Separate the variable V$_x$ from the above equation and integrate both sides of this equation.
+\begin{align}
+    v_{z}=\frac{m v_{z 0}}{k v_{z 0} t+m}    
+\end{align}
+Again, separate the variable z and apply the initial conditions $\left.z\right|_{t=0}=0$.
+\begin{align}
+     z=\frac{m}{k} \ln \left(1+\frac{k v_{z 0} t}{m}\right)+z_{0}   
+\end{align}
+When $v_{z 0}<0$:
+\begin{align}
+    v_{z}=\frac{v_{z 0} m}{m-k v_{z 0} t}
+\end{align}
+Similarly,
+\begin{align}
+    z=\frac{-m}{k} \ln \left(1-\frac{k v_{z 0} t}{m}\right)+z_{0}
+\end{align}
+Where the initial conditions are
+\begin{align}
+    \left.z\right|_{t=0}=0,\left.v_{z}\right|_{t=0}=v_{z 0}
+\end{align}
+y axis:
+The vertical y axis is influenced by gravity and air resistance. According to the kinematic model and Newton’s second law
+\begin{align}
+\begin{split}
+   m \frac{\partial^{2} y}{\partial t^{2}}&=-k\left(\frac{\partial y}{\partial t}\right)^{2}-m g\qquad(\frac{\partial y}{\partial t} \geq 0)\\
+   m \frac{\partial^{2} y}{\partial t^{2}}&=k\left(\frac{\partial y}{\partial t}\right)^{2}-m g\qquad(\frac{\partial y}{\partial t} \leq 0)
+\end{split}
+\end{align}
+Where the initial conditions are
+\begin{align}
+    \left.y\right|_{t=0}=h,\left.v_{y}\right|_{t=0}=v_{0 y}
+\end{align}
+Substituting $v_{y}=\frac{\partial y}{\partial t}$t into equation $m \frac{\partial^{2} y}{\partial t^{2}}=-k\left(\frac{\partial y}{\partial t}\right)^{2}-m g$, we have
+\begin{align}
+    m \frac{\partial v_{z}}{\partial t}=-k v_{z}^{2}-m g
+\end{align}
+Adopting the method of separating variables and apply the initial condition $\left.v_{y}\right|_{t=0}=v_{y 0}$
+\begin{align}
+    v_{z}=\sqrt{\frac{m g}{k}} \tan \left[\arctan \left(\sqrt{\frac{k}{m g}} v_{z 0}\right)-t \sqrt{\frac{g k}{m}}\right]
+\end{align}
+Again, separate the variable x and apply the initial conditions $\left.y\right|_{t=0}=h$
+\begin{align}
+    z=h-\frac{m}{k} \ln \left[\frac{\cos \left[\arctan \left(\sqrt{\frac{k}{m g}} v_{z 0}\right)\right]}{\cos \left[\arctan \left(\sqrt{\frac{k}{m g}} v_{z 0}\right)-t \sqrt{\frac{g k}{m}}\right.}\right]
+\end{align}
+When $v_{y}=0$, the golf reaches the highest position. That is
+\begin{align}
+    t=t_{1}=\sqrt{\frac{m}{g k}} \arctan \left(\sqrt{\frac{k}{m g}} v_{y 0}\right)
+\end{align}
+\begin{align}
+    y_{\max }=h-\frac{m}{k} \ln \left\{\cos \left[\arctan \left(\sqrt{\frac{k}{m g}} v_{y 0}\right)\right]\right\}
+\end{align}
+When $t>t 1$, the golf begins to fall
+\begin{align}
+    v_{y}=\frac{\sqrt{\frac{m g}{k}}\left(1-e^{\sqrt{\frac{k g}{m}}\left(t-t_{1}\right)}\right)}{1+e^{\sqrt{\frac{k g}{m}}\left(t-t_{1}\right)}}
+\end{align}
+\begin{align}
+    y=y_{\max }+\frac{m}{k} \ln \left\{\frac{4 e^{\sqrt{\frac{k g}{m}}\left(t-t_{1}\right)}}{\left[1+e^{\sqrt{\frac{k g}{m}}\left(t-t_{1}\right)}\right]^{2}}\right\}
+\end{align}
+when the golf ball hits the ground,y=0,substituting it into equation (34), the total flying time can be get
+\begin{align}
+    T=t_{1}+\sqrt{\frac{m}{k g}} \ln \left(\frac{2-e^{-\frac{k}{m} y_{\max }}+2 \sqrt{1-e^{-\frac{k}{m} y_{\max }}}}{e^{-\frac{k}{m} y_{\max }}}\right)
+\end{align}
+\newpage
+\subsection{Matlab Simulation}
+In this part, we have implemented the kinematic model we discussed above using Matlab to check  the accuracy of model. The simulation result is showed as figure ,respectively showing the complete movement trajectory of golf and the prediction results of top view and side view.
+\begin{figure}[H]
+    \centering
+    %\includegraphics[width=\textwidth]{figure/Matlab.pdf}
+    \caption{Trajectory simulation in Matlab}
+\end{figure}
+The prediction results and error statistics of 20 sets of data are showed as table. The initial values are (Initial velocity/MPH, elevation/degree,Azimuth/degree).
+\begin{table}[H]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Index & Initial Value     & \begin{tabular}[c]{@{}c@{}}Reference \\ (Carry,Peak)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Predicted \\ (Carry,Peak)\end{tabular} & \begin{tabular}[c]{@{}c@{}}Errors\\ (Carry,Peak)\end{tabular} \\ \hline
+1     & (111.7,19.4,-1.9) & (156,33)                                                          & (154.32,32.77)                                                    & (-1.68.0.23)                                                  \\ \hline
+2     & (102.6,19.5,1.6)  & (142,27)                                                          & (141.11,26.80)                                                    & (-0.89,-0.20)                                                 \\ \hline
+3     & (103.9,25.4,-2.3) & (141,35)                                                          & (141.67,33.62)                                                    & (0.67,-1.38)                                                  \\ \hline
+4     & (108.7,21.9,2.4)  & (150,34)                                                          & (153.43,33.12)                                                    & (3.43,-0.88)                                                  \\ \hline
+5     & (110.2,19.4,-2.5) & (157,31)                                                          & (154.05,29.70)                                                    & (-2.95,-1.3)                                                  \\ \hline
+6     & (113.2,15.6,-1.9) & (165,26)                                                          & (167.12,26.39)                                                    & (2.12,-0.39)                                                  \\ \hline
+7     & (107.2,17.3,-1.5) & (154,26)                                                          & (155.37,26.97)                                                    & (1.37,-0.97)                                                  \\ \hline
+8     & (115.6,16.7,1.5)  & (170,30)                                                          & (168.77,30.18)                                                    & (-1.23,0.18)                                                  \\ \hline
+9     & (104,26.6,0.4)    & (141,35)                                                          & (139.09,34.13)                                                    & (-1.91,-0.87)                                                 \\ \hline
+10    & (102.6,19.5,1.6)  & (142,27)                                                          & (141.60,28.60)                                                    & (-0.40,1.60)                                                  \\ \hline
+11    & (114.9,17.6,-1.0) & (164,32)                                                          & (165.97,31.18)                                                    & (1.97,-0.82)                                                  \\ \hline
+12    & (113.8,17.5,0.1)  & (166,31)                                                          & (162.87,31.90)                                                    & (-3.13,0.9)                                                   \\ \hline
+13    & (105.2,16.9,-0.1) & (152,24)                                                          & (155.91,25.80)                                                    & (3.91,1.8)                                                    \\ \hline
+14    & (115.5,14.7,-1.9) & (168,26)                                                          & (167.09,25.88)                                                    & (-0.91.-0.12)                                                 \\ \hline
+15    & (114.9,14.8,-0.7) & (174,25)                                                          & (175.24,25.56)                                                    & (1.24,0.56)                                                   \\ \hline
+16    & (119.1,13.9,1.1)  & (180,27)                                                          & (177.06,25.97)                                                    & (-2.94,-1.03)                                                 \\ \hline
+17    & (110.5,12.1,0.4)  & (102,22)                                                          & (110.91,21.13)                                                    & (8.91,-0.87)                                                  \\ \hline
+18    & (127.7,11.6,1.0)  & (201,26)                                                          & (204.84,26.59)                                                    & (3.84,0.59)                                                   \\ \hline
+19    & (102.2,24,0.6)    & (139,33)                                                          & (136.17,31.15)                                                    & (-2.83,-1.85)                                                 \\ \hline
+20    & (103.2,15.6,1.7)  & (147,21)                                                          & (144.54,21.89)                                                    & (-2.46,0.89)                                                  \\ \hline
+\end{tabular}
+\end{table}
 \newpage
 \section{Software design}
-The back-end software of the project runs on a single board computer (Raspberry Pi 4). The front-end software of the project is designed to run on mainstream operating systems or platforms such as iOS, Android, Windows and macOS. Through the modular design, each module can be developed using the most suitable programming language to achieve the best development efficiency and maintainability. About three thousand lines of code including C, python and C\# constitute the software part of the project. The software design of this project needs to have the following functions: 
+The back-end software of the project runs on a single board computer (Raspberry Pi 4). The front-end software of the project is designed to run on mainstream operating systems or platforms such as iOS, Android, Windows and macOS. Through the modular design, each module can be developed using the most suitable programming language to achieve the best development efficiency and maintainability. About three thousand lines of code, including C, Python and C\# constitute the software part of the project. The software design of this project needs to have the following functions: 
 \begin{itemize}[noitemsep,topsep=0pt]
    \item Read ADC data through SPI protocol
    \item Analyse the radar data to get the launch speed and angle of the ball
@@ -160,25 +295,53 @@ The back-end software of the project runs on a single board computer (Raspberry 
    
 Ideally, the back-end system is designed to run automatically without user action after the power is turned on. The front-end system needs to have an easy-to-use graphic user interface for users to operate.
 
+
+
 \subsection{Software Architecture}
 The back-end server of this project is based on Raspberry Pi OS (formerly Raspbian), which is a Debian derivative for Raspberry Pi. The stability and large open-source community of Debian bring convenience to the project development. The front-end application is based on the Unity 3D engine. This engine was selected because of its cross-platform portability.
-\\
+\par
 Due to the impact of the epidemic, the communication and cooperation of the project team are affected by the level 3 restrictions and time difference. Through object-oriented programming, different modules can be assigned to different team members. By deploying Git for version control, and the use of low coupling and high cohesion program design, the impact of the epidemic on teamwork is minimised.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figure/Software.pdf}
-    \caption{Software Architecture Diagram}
+    \caption{Software architecture diagram}
     \label{fig:software_diagram}
 \end{figure}
-The software architecture diagram is shown in Figure \ref{fig:software_diagram}. The back-end server contains three modules. The data reading module is responsible for operating the ADC. The signal processing module is used to compute the flight trajectory from the radar signal. The transmission module is responsible for communicating with the front-end device. The front-end application contains two modules. The transmission module communicates with the back-end server, and the visualisation module displays the flight trajectory on the user interface
+The software architecture diagram is shown in Figure \ref{fig:software_diagram}. The main program of the back-end server is written in Python, it contains three modules. The data reading module is responsible for operating the ADC. The signal processing module is used to compute the flight trajectory from the radar signal. The transmission module is responsible for communicating with the front-end device. The front-end application scripts are written in C\#, it contains two modules. The transmission module communicates with the back-end server, and the visualisation module displays the flight trajectory on the user interface.
+
+
 \subsection{ADC Reading}
-\subsubsection{SPI protocol}
+The back-end server communicates with the ADC through the SPI protocol. According to the datasheet  \textcite{raspberrypi}, there are 4 SPI buses natively provided by its CPU (BCM2711) with maximum baud rates of 250MHz. 
+\par
+There are some open-source MCP3008 drivers with Python API or C API available for Raspberry Pi. As mentioned in the hardware section, the ADC sampling rate needs to reach 20ksps to meet the requirements of Nyquist theorem. Since most of the SPI drivers are dependent on the Linux kernel SPI driver, the speed limit of the Linux SPI driver may limit the final sampling rate.
+\par
+As shown in the Figure \ref{fig:spi}, by testing the driver at different baud rates, the lowest baud rate required by the project can be obtained. When the baud rate is higher than 4MHz, the sampling speed of the Linux SPI driver can meet the requirement of 20ksps.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figure/spi_linux.pdf}
+    \caption{Linux SPI driver speed test}
+    \label{fig:spi}
+\end{figure}
+In addition to the impact of the Linux driver, the clock accuracy of a programming language may also affect the accuracy of the sampling period. The sampling period of ADC in this project $ 1/20ksps=0.00005s=0.05ms$. As a high-level programming language, the accuracy of Python’s clock module will be affected by many factors. According to \textcite{python}, the time module of Python can only guarantee millisecond precise, and the specific value of accuracy depends on the operating system. Therefore, the ADC reading module needs to be independent of the main program and written in the C.
+\par
+\textcite{pigiop} is an open-source C library for Raspberry Pi to control General Purpose Input Outputs (GPIO). The SPI wrapper API provided by the pigpio library can meet the requirements for both ADC sampling rate and sampling period accuracy.
+\par
+The simplified finite state machine (FSM) of the ADC reading module is shown in Figure \ref{fig:adc_module}. When the main program calls the ADC reading module, the module will enter the detection state. In the detection state, the module will read ADC values at a speed of 1ksps. When two or more of the four ADC channels reach the corresponding high voltage threshold, the module will enter the sampling state. In the sampling state, the ADC reading module will sample and store the ADC value at a speed of 20ksps. When two or more channels are lower than the corresponding low voltage threshold, the module will return the data to the main program. Due to the radar signal characteristics mentioned in the hardware section, each channel will have a different voltage threshold.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figure/SPI.pdf}
+    \caption{FSM of the ADC reading module}
+    \label{fig:adc_module}
+\end{figure}
+Since the ADC module is written in C, the module needs to be compiled into a dynamically linked shared object library (.so) and imported by the ctypes module of Python.
+
+
 
 \subsection{Signal Processing}
 琼慧写
 \subsection{Trajectory Simulation}
 琼慧写
-\subsection{Wireless Communication Solution}
+\subsection{Wireless Communication}
 
 \subsubsection{Communication Protocol selection}
 
