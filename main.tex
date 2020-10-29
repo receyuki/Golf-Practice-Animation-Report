@@ -44,17 +44,29 @@
 
 
 \section{Introduction}
+In order to enable amateur golfers to enjoy real golf and improve their skills, this system is designed to help amateur golfers overcome the problem that hindering their improvement.
+Technologies from multiple fields were adopted to develop this real-time golf flight trajectory visualization system. In this project, the use of new technologies in traditional sports has shown the development and prospects of using consumer electronics in traditional sports.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figure/BlockDiagram_bw.pdf}
+    \caption{High-level block diagram of the system}
+     \label{fig:block}
+\end{figure}
+
+The high-level block diagram of the system is shown in Figure \ref{fig:block}. This system is based on two IVS-565 radars. By using 24GHz Doppler radars with four antennas and a processing circuit including amplifier, filter, level shifter, power supply and ADC, real-time monitoring of the golf Doppler effect can be achieved. The multi-module back-end server equipped on the Raspberry Pi will automatically analyse the Doppler effect of the golf ball and calculate the golf launch speed and angle by adopting the phase-comparison monopulse method.
+By deploying the kinematic model, the flight trajectory of the golf ball can be predicted. Finally, the system transmits the flight trajectory data to the smartphone through a transmission module based on Bluetooth low energy and compression algorithms. The easy-to-use visualization application provides the user with a multi-angle 3D golf flight trajectory for each shot.
 
 
-
+\newpage
 \section{Literature Review}
-The existing mainstream simulator sensing devices are roughly divided into three types\textcite{tuxen2020method}：
+The existing mainstream simulator sensing devices are roughly divided into three types \textcite{tuxen2020method}.
 the first one is the Infrared sensing system,it's Working principle is based on using infrared measurement system, and it has following advantages: Good durability, wide adaptability, low price, low maintenance cost, high cost performance.In a word, It is an affordable choice for experiencing the fun of golf indoors and suitable for entertainment environment.
 
-the second trend is using High-speed camera sensor system, and this kind of devices are using split-type high-speed camera measurement system, Canadian industrial-grade surveillance camera equipment, binocular vision measurement and precise analysis.
+The second trend is using High-speed camera sensor system, and this kind of devices are using split-type high-speed camera measurement system, Canadian industrial-grade surveillance camera equipment, binocular vision measurement and precise analysis.
 its advantages are mainly utilised in accuracy , so it is more suitable for professional players. meanwhile, it is easy to use, and adaptable. Normally, it can accurately measure the flight data of 8 groups of golf balls,support swing action drawing line analysis, and has the most realistic stadium software system. So it is an excellent choice for players who want to improve their skills.
 
-the last type is Radar sensing system.  The Working principle is  using radar detection system.
+The last type is Radar sensing system.  The Working principle is  using radar detection system.
 this devices have plenty of advantages like extremely professional golf tracking and testing equipment, \textcite{trackmangolf} with an accuracy of 0.3 yards per 100 yards, accurate data for 14 sets of golf balls, 9 sets of club data, 3 sets of measured data, and the measurement accuracy is approved by authoritative golf institutions such as Professional Golfers' Association (PGA) Certification; comes with swing analysis software,which can freely connect to terminal devices such as iPad, iPhone, PC. The most typical example is the Trackman radar measuring device, and it is currently widely used by PGA professional golfers and is a professional high-end choice for improving golf swing and hitting skills.
 
 
@@ -67,10 +79,10 @@ This chapter is mainly introducing the selection of hardware components and the 
 \subsection{Overall hardware architecture}
 This section explains the overall hardware structure design of golf track detection system. In details, this system is divided into four 
 44
- parts: radar circuit, amplifying and filtering circuit, power supply circuit, and DC level shifter circuit. Which is specifically illustrate in the figure1.
+ parts: radar circuit, amplifying and filtering circuit, power supply circuit, and DC level shifter circuit. Which is specifically illustrate in the Figure 2.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=9cm,height=11cm]{figure/hardware
+    \includegraphics[width=9cm,,height=11cm]{figure/hardware
     architecture.jpg}
     \caption{hardware architecture}
 \end{figure}
@@ -78,7 +90,7 @@ This flowchart mainly focuses on processing analog signals. The reason for using
 \subsection{Radar}
 Radar is an electromagnetic system emitting and receiving radio signals to detect and measure objects’ information within its detectable range. There are two main types of radar, pulse wave and continuous-wave(CW). Pulse radar will not send the next pulse until it completes each transmitting and receiving cycle. One antenna is enough to satisfy all operating requirements. On the contrary, CW radar needs one more antenna. Because it can emit a signal and receive another return signal at the same time. Compared with pulse wave radar, CW radar does better in the simplification of microwave filtering due to its narrower transmitted spectrum. Also, it can handle almost all objects with controllable speed at any distance (\cite{skolnik1970radar}). Considering these factors, CW radar is adopted in this project. 
 
- Doppler frequency refers to the change of frequency when an object moves along a direction due to the difference in its travel distance, showed as figure \ref{fig:doppler} (\cite{DopplerRader}). One of the main pieces of information that can be extracted from the Doppler frequency is the radial velocity. The Doppler frequency becomes lower when the object is heading away from the radar with a smaller frequency return signal.
+ Doppler frequency refers to the change of frequency when an object moves along a direction due to the difference in its travel distance, showed as Figure \ref{fig:doppler} (\cite{DopplerRader}). One of the main pieces of information that can be extracted from the Doppler frequency is the radial velocity. The Doppler frequency becomes lower when the object is heading away from the radar with a smaller frequency return signal.
  \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figure/Radar.png}
@@ -97,7 +109,7 @@ V_{r}=\frac{\lambda}{2} f_{d}=V \cos \theta
 \end{align}
 
 
-From the equations above, we can get the following conclusion.
+From the equations above, the following conclusions can be drawn.
 \begin{itemize}[noitemsep,topsep=0pt]
    \item As long as the target Doppler frequency is measured, the velocity of the target can be obtained
    \item The Doppler shift of fixed target  shift is zero
@@ -111,17 +123,17 @@ The Innosent company is established in 1999. It is a high-tech company specializ
 IVS-565 radars contains an advanced PHEMT -oscillator for lowest power consumption. It is also an Ideal device for security applications. 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6cm,height=6cm]{figure/IVS-565Radar.jpg}
+    \includegraphics[width=6cm]{figure/IVS-565Radar.jpg}
     \caption{IVS-565 Radar}
     \label{png_IVS565}
 \end{figure}
-meanwhile, It adopts a planar microstrip antenna structure and has a very small appearance. All of these characteristics make it suitable for various integrated circuits. IVS-565’s functions are also diverse, such as detecting the speed of objects and identifying the direction of moving targets.
+Meanwhile, It adopts a planar microstrip antenna structure and has a very small appearance. All of these characteristics make it suitable for various integrated circuits. IVS-565’s functions are also diverse, such as detecting the speed of objects and identifying the direction of moving targets.
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm,height=6cm]{figure/IVS-565Structure.jpg}
     \caption{IVS-565 Structure}
 \end{figure}
-As for this project, we choose CW-mode for IVS-565, its main theory is: According to the direction of movement of the object, the wave front transmitted by the wave generator (sound, microwave, light, etc.) is either "Compress" or "shrink", which ultimately means frequency changes. Signal shift in Initial frequency and reflection frequency from relatively unchanged transmitted signal are combined in the simple mixer (called "homodyne" by experts) , as a result, it produces sinusoidal intermediate products frequency (IF).
+As for this project, the CW-mode has been chosen for IVS-565, its main theory is: According to the direction of movement of the object, the wave front transmitted by the wave generator (sound, microwave, light, etc.) is either "Compress" or "shrink", which ultimately means frequency changes. Signal shift in Initial frequency and reflection frequency from relatively unchanged transmitted signal are combined in the simple mixer (called "homodyne" by experts) , as a result, it produces sinusoidal intermediate products frequency (IF).
 \subsubsection{Radar Selection}
 The selection of Radar should fit into the condition that needs to apply for golf ball trajectory simulation. The requirements is to both detect angles and speed. The ability to detect both elevation angle and azimuth angle is the most tricky part. The existing technology can take advantages of phase differences of the returned signal to obtain angles.
 A single pulse is transmitted by a directional antenna and received by two independent antennas. The distance between these antennas is known. The two antennas face the same direction and cover the same spatial area. The reflected signal has the same amplitude, resulting in a different phase.
@@ -136,14 +148,14 @@ Using above method, although IPM,IVS,IPS these three types of radar are all suit
 \subsubsection{Radar Circuit connection}
 The CW-Doppler radar is the simpliest and most efficient solution in cases where the detection of moving object is the only and outstanding task. 
 IVS-565 radar contains 6 pins, and the connection will be shown According to  \textcite{IVS-565}
-the typical positive power supply is +5V, and the negative power supply in proper condition is -3.3V, meanwhile, decoupling capacitors are used to reduce noise from the equipment to the power supply. Considering the mode we choose is CW, so the connection for Vtune is suspended. In this way, the transmit frequency will be set to the default value , which is 24 GHz at 25 C.
+the typical positive power supply is +5V, and the negative power supply in proper condition is -3.3V, meanwhile, decoupling capacitors are used to reduce noise from the equipment to the power supply. Considering the mode is CW, so the connection for Vtune is suspended. In this way, the transmit frequency will be set to the default value , which is 24 GHz at 25 C.
 the remaining two output pin will be connect to the input of the amplifying filter circuit.
 As for the placement, One of the radars obtains the azimuth angle through horizontal fixation
 Another radar will fix the antenna vertically to obtain the elevation angle. Moreover, in order to make the angle detection more precisely, it is necessary to keep the centroids of the two radars at the same level. 
-\subsection{amplifying filter circuit design}
+\subsection{Amplifying filter circuit design}
 Combined with the condition that the output of IVS-565 is too small, amplifying circuit is needed for detection. Section 3.3.1’s content is covering the basic requirement for amplifying filter circuit, section 3.3.2 denotes the selection of the amplifier, and section 3.3.3 describes our circuit configuration and simulation results. At the end, considering the COVID-19, the project adjust another circuit to suit for reality.
 \subsubsection{Design Requirements}
-according to \textcite{IVS-565}, the output power is of IVS-565 almost 15.849mw, its too small, and in order for detecting the signal information, it is necessary to add further amplification circuit, the amount is in theory should be 70 to 80 dB from \textcite{Application_Note_I}
+According to \textcite{IVS-565}, the output power is of IVS-565 almost 15.849mw, its too small, and in order for detecting the signal information, it is necessary to add further amplification circuit, the amount is in theory should be 70 to 80 dB from \textcite{Application_Note_I}
 \begin{align}
 \operatorname{gain}_{\max }=10^{\frac{80}{20}}=10000    
 \end{align}
@@ -152,21 +164,21 @@ according to \textcite{IVS-565}, the output power is of IVS-565 almost 15.849mw,
 \end{align}
 Meanwhile, due to the relationship between the moving objective and the output frequency:
 \begin{align}
-f_{\text {Dopp}}=2 * f_{0} * \frac{v}{c_{0}} * \cos \alpha
+f_{\text {Dopp}}=2\cdot f_{0}\cdot\frac{v}{c_{0}}\cdot\cos \alpha
 \end{align}
 Where fdopp represents the Doppler frequency, and  f0 denotes the transmit frequency of the radar. v represents magnitude of velocity of the moving objects, and c0 is velocity of light, then alpha is the angle between the actual direction of motion and the connecting line sensor-object.
 In general, choosing the angle between the golf ball and sensor to be 0, and the fastest golf ball speed is around 340km/h from \textcite{kobayashi1988golf},every golf players will impossible to hit the ball exceeding this speed, so this frequency of 15KHZ should be the upper limit for our filter, and the frequency beyond this value should be declined to remove the noise. Selecting 24 GHz as transmit frequency\textcite{Application_Note_I},
 \begin{align}
-f_{\text {Dopp}}=2 * f_{0} * \frac{v}{c_{0}} * \cos \alpha_{ }
+f_{\text {Dopp}}=2\cdot f_{0}\cdot\frac{v}{c_{0}}\cdot\cos \alpha_{ }
 \end{align}
 \begin{align}
-f_{\text {Dopp}}=2 * 24 * 10^{9} \frac{340 * \frac{10}{36}}{3 * 10^{8}} * 1=15.111 \mathrm{kHZ}
+f_{\text {Dopp}}=2\cdot24\cdot10^{9} \cdot\frac{340\cdot \frac{10}{36}}{3\cdot10^{8}}\cdot1=15.111 \mathrm{kHZ}
 \end{align}
  On the other hand , it also makes a sense to create the lower limit because we don’t want every movement to be detected, such as people walking speed, which is corresponding to 6.8km/h
  \begin{align}
-f_{\text {Dopp}}=2 * 24 * 10^{9} \frac{6.8 * \frac{10}{36}}{3 * 10^{8}} * 1=302 \mathrm{HZ}
+f_{\text {Dopp}}=2\cdot24\cdot10^{9} \frac{6.8\cdot \frac{10}{36}}{3\cdot10^{8}}\cdot1=302 \mathrm{HZ}
 \end{align}
-\subsubsection{amplifier selection}
+\subsubsection{Amplifier selection}
 OP27G is a precision operational amplifier combines low power consumption offset and low noise characteristics. Its offset as low as 25μV, maximum drift is 0.6μV/°C, OP27 is an ideal choice for precision instrument applications, which allows accurate high-gain amplification of low-level signals and provides excellent dynamic accuracy in high-speed data acquisition systems.
 Considering the required magnification is large, and the effect is better if two amplifiers are connected in series, so in this project, choose one of the magnifications to be 100 and the other to be 60.
 \begin{figure}[H]
@@ -176,30 +188,30 @@ Considering the required magnification is large, and the effect is better if two
 \end{figure}
 Then the gain bandwidth of the amplifier should be greater than
  \begin{align}
-G B W>\text { gain } * \text { bandwidth }=100 * 15.2 * 10^{3}=1.52 \mathrm{MHZ}
+G B W>\text { gain }\cdot\text { bandwidth }=100\cdot15.2\cdot 10^{3}=1.52 \mathrm{MHZ}
 \end{align}
 The GBW from OP27G datasheet is 8MHZ when gain is 100, and its totally affordable, so it is suitable for choosing.
 \subsubsection{LTSpice simulation}
-LTSpice has the high simulation performance (multi-core parallel computing can be used) and Convenient operation, which is very helpful with the habits of engineers who need to make a lot of adjustments and observations on the circuit, and the operation achieves a good balance in efficiency and Authenticity。
+LTSpice has the high simulation performance (multi-core parallel computing can be used) and Convenient operation, which is very helpful with the habits of engineers who need to make a lot of adjustments and observations on the circuit, and the operation achieves a good balance in efficiency and Authenticity.
 Above requirements contribute to the main plan for amplitude filter circuit.in this way, the project combines low-pass filter, high-pass filter and amplification circuit together.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/Amplifyingfiltercircuit.png}
      \caption{Amplifying filter circuit}
 \end{figure}
-when designing the circuit,the project selects Butterworth filters.
-The characteristic of the Butterworth filter is that the frequency response curve in the pass band is flat to the maximum without fluctuations, while it gradually drops to zero in the stop band.The higher the filter order, the faster the amplitude attenuation in the stop band, in this circuit,the filter order is set to be 2, The attenuation rate of the second-order Butterworth filter is 12 decibels per octave。
-Leting the damping ratioζ to be 1,then write following equations, as for the first filter1:
+When designing the circuit,the project selects Butterworth filters.
+The characteristic of the Butterworth filter is that the frequency response curve in the pass band is flat to the maximum without fluctuations, while it gradually drops to zero in the stop band.The higher the filter order, the faster the amplitude attenuation in the stop band, in this circuit,the filter order is set to be 2, The attenuation rate of the second-order Butterworth filter is 12 decibels per octave.
+Leting the damping ratio ζ to be 1, then write following equations. \\As for the first filter:
 \begin{align}
 K 1=-\frac{R_{5}}{R_{6}}=-100
 \end{align}
 \begin{align}
-\frac{C_{3}}{C_{4}} \leq \zeta^{2} *(1-K 1)
+\frac{C_{3}}{C_{4}} \leq \zeta^{2}\cdot(1-K 1)
 \end{align}
 \begin{align}
 f_{c}=\frac{1}{2 \pi \sqrt{R_{4} R_{5} C_{3} C_{4}}}=15.11 \mathrm{KHZ}
 \end{align}
-Considering electronic components available around, choose C3=100p,C4=0.022μ, then we can get R6=270Ω,R5=27kΩ,R4=1.8kΩ
+Considering electronic components available around, choose C3=100p, C4=0.022μ, then R6=270Ω, R5 =27kΩ, R4=1.8kΩ. \\ 
 As for the second filter:
 \begin{align}
 K 2=-\frac{C_{1}}{C_{2}}=-68
@@ -207,11 +219,11 @@ K 2=-\frac{C_{1}}{C_{2}}=-68
 \begin{align}
 f_{c}=\frac{1}{2 \pi \sqrt{R_{1} R_{2} C_{2} C_{5}}}=302 \mathrm{HZ}
 \end{align}
-Considering the existing element I have, choose C1=6.8μ,C2=0.1μ,C5=0.1μthen we can get R1=180Ω,R2=180kΩ.
-After simulating,  The result is within our expected range:
+Considering the existing elements, choose C1=6.8μ, C2=0.1μ, C5=0.1μ, then R1=180Ω, R2=180kΩ.
+After simulating,  The result is within the expected range.
 
-\subsubsection{real implementation}
-This year due to the COVID-19, there is no way for us to go outside to complete the project, which also means given such a huge speed for radar to detect is impossible,  so the plan about the amplification circuit is adjusted by changing the frequency range within 15HZ to 1KHZ, the range refers to the speed limitation that I move my hand towards radar, then when I stay at home and wave my arms in front of the radar, it can also give us the useful waveform for us to do signal processing.
+\subsubsection{Real implementation}
+This year due to the COVID-19, there is no way to go outside to complete the project, which also means given such a huge speed for radar to detect is impossible. So the plan about the amplification circuit is adjusted by changing the frequency range within 15HZ to 1KHZ, the range refers to the speed limitation that move people's hand towards radar, then when waving arms in front of the radar, it can also give the useful waveform to do signal processing.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/realamplifyingfiltercircuit.png}
@@ -225,8 +237,8 @@ f_{c 2}=\frac{1}{2 \pi C_{1} R_{5}}=1 \mathrm{KHZ}
 \end{align}
 
 The double filters are trying to make the signal decline as much as possible beyond the frequency range we want, and the last RC high pass filter is to avoid signal aliasing. 
-\subsection{power supply circuit}
-This step is to make further detection becomes more convenient and independent, from picture\ref{fig:power_radar} during the radar circuit, it need -3.3 V and +5V to drive at a normal operation condition. Besides, active filter amplifier also need connected to ±5V, in this way, I choose two power mode to produce electricity.
+\subsection{Power supply circuit}
+This step is to make further detection becomes more convenient and independent, from Figure \ref{fig:power_radar} during the radar circuit, it need -3.3 V and +5V to drive at a normal operation condition. Besides, active filter amplifier also need connected to ±5V, in this way, two power mode to produce electricity are chosen.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/powersupplyofIVS565Radar.png}
@@ -235,36 +247,36 @@ This step is to make further detection becomes more convenient and independent, 
 \end{figure}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{figure/powerAM2.png}
+    \includegraphics[width=0.4\textwidth]{figure/powerAM2.png}
     \caption{power supply of IVS-565 Radar}
     \label{fig:power_radar}
 \end{figure}
-Each radar consists of two output, and each one output needs a filter amplifier to connect,so the power supply of each amplifier circuit can be seen from above.
+Each radar consists of two output, and each one output needs a filter amplifier to connect, so the power supply of each amplifier circuit can be seen from above.
 The power for each voltage supply can be calculated:
 \begin{align}
-+5 V: 8 *(20.216+28.494)+35 * 2 * 5=739.68 m W<1 W
++5 V: 8\cdot(20.216+28.494)+35\cdot2\cdot5=739.68 m W<1 W
 \end{align}
 \begin{align}
--5 V: 8 *(20.216+28.494)=389.68 m W<1 W
+-5 V: 8\cdot(20.216+28.494)=389.68 m W<1 W
 \end{align}
 \begin{align}
--3.3 V: 2 * 1 * 3.3=6.6 m W<1 W
+-3.3 V: 2\cdot1\cdot3.3=6.6 m W<1 W
 \end{align}
 According to the calculated power, the type of the power module can be selected K-CUT A0505S-1W and K-CUT A0503S-1W.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{figure/powersupplycircuit.jpg}
+    \includegraphics[width=0.6\textwidth]{figure/powersupplycircuit.jpg}
     \caption{power supply of IVS-565 Radar}
     \label{fig:power_radar}
 \end{figure}
 
 For circuits with strict noise requirements, additional circuits with LC parallel are used, and the value of capacitor and inductor is determined by Vin and Vout.
 \subsection{ADC}
-MCP3008 is 10-bit successive approximation ADC, mainly composed of input channel gate switch, sampling and holding unit, data converter (DAC), comparator, 10-bit successive approximation register (SAR), control logic unit and shift register, showed as figure \ref{fig:ADC} (\cite{mcp3008}). The comparator compares the measured voltage with the known standard voltage. When the measured voltage equals to the standard voltage, the standard voltage is the result of A/D conversion. Standard voltage can be variable according to the binary code change, which is usually produced by the SAR and DAC. First it is produced by generating a binary encoding digital signal using SAR and this signal will be converted into analog voltage using DAC. The bits of SAR determines the resolution of A/D converter and the number of comparisons needed to complete an A/D conversion process. The channel number for each A/D conversion is selected by the control logic, and the converted binary data is serialized through the shift register (\cite{ADConverter}).
+MCP3008 is 10-bit successive approximation ADC, mainly composed of input channel gate switch, sampling and holding unit, data converter (DAC), comparator, 10-bit successive approximation register (SAR), control logic unit and shift register, showed as Figure \ref{fig:ADC} (\cite{mcp3008}). The comparator compares the measured voltage with the known standard voltage. When the measured voltage equals to the standard voltage, the standard voltage is the result of A/D conversion. Standard voltage can be variable according to the binary code change, which is usually produced by the SAR and DAC. First it is produced by generating a binary encoding digital signal using SAR and this signal will be converted into analog voltage using DAC. The bits of SAR determines the resolution of A/D converter and the number of comparisons needed to complete an A/D conversion process. The channel number for each A/D conversion is selected by the control logic, and the converted binary data is serialized through the shift register (\cite{ADConverter}).
 \begin{figure}[H]
     \centering
-    \includegraphics[width=10cm]{figure/ADC.png}
+    \includegraphics[width=7cm]{figure/ADC.png}
     \caption{MCP3008 Functional Module}
     \label{fig:ADC}
 \end{figure}
@@ -274,11 +286,11 @@ A 10-bit ADC represents an analog voltage expressed as a 10-digit number on the 
 \end{align}
 A 10-digit number multiplied by a step voltage of 0.003 represents the output voltage.
 \subsubsection{DC-level shifting circuit}
-the former radar circuit usually causes voltage offset of ±300mV, but the plan is to connect Analog-digital-converter to better process the signal information. The ADC of the project is MCP3008:
+The former radar circuit usually causes voltage offset of ±300mV, but the plan is to connect Analog-digital-converter to better process the signal information. The ADC of the project is MCP3008:
 
 From the datasheet\textcite{mcp3008},the voltage range coming into MCP3008 needs to be 0-3.3V, but due to original negative offset of radar output, a voltage shifter circuit is necessary to better compensate the offset of the signal.
 
-the level shifting circuit requires one amplifier, but there is no need for it to amplify the signal anymore, so just make  R7=R8
+The level shifting circuit requires one amplifier, but there is no need for it to amplify the signal anymore, so just make  R7=R8
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/level shifting circuit.png}
@@ -287,20 +299,20 @@ the level shifting circuit requires one amplifier, but there is no need for it t
 \end{figure}
 
 \begin{align}
-V_{A}=V_{B}=\frac{R_{11}}{R_{10}+R_{11}} *-5
+V_{A}=V_{B}=\frac{R_{11}}{R_{10}+R_{11}}\cdot-5
 \end{align}
 \begin{align}
 \frac{V_{i n}-V_{B}}{R_{7}}=-\frac{V_{c}-V_{B}}{R_{8}}
 \end{align}
 
-As a result, R8=150,R7=150,R11=20,R10=51k
+As a result, R8=150, R7=150, R11=20, R10=51k.
 
 
 \newpage
 \section{Trajectory Simulation Model}
 This chapter introduces the main theory about how to extract interested information and use these information to build the prediction model. Section 4.1 illustrates the main components of kinematic model, including gravity, air resistance, Magnus force and buoyancy. Section 4.2 and Section 4.3 talk about acquiring the golf's flying velocity and angle respectively. Section 4.4 shows the mathematics deviation of trajectory simulation based on kinematic model.
 \subsection{Kinematic Model}
-The flying golf ball is mainly affected by gravity, drag force from air resistance, Magnus force and buoyancy, showed as figure \ref{fig:model} (\cite{KinematicModel}). 
+The flying golf ball is mainly affected by gravity, drag force from air resistance, Magnus force and buoyancy, showed as Figure \ref{fig:model} (\cite{KinematicModel}). 
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figure/force.png}
@@ -319,7 +331,7 @@ When the golf is flying, its surrounding air exerts a drag on it to push it back
 \end{align}
 where C$_D$ is the drag coefficient, with a common value 0.4. $\rho$ is air density, equaling to 1.23kg/m $^3$. A is the cross section area of the ball, related to the diameter of golf ball. Typically, the diameter of golf is 42.67mm\\
 
-The golf ball rotates continuously around its own axis during its flight. When a fluid flows in the direction perpendicular to this axis, it will be subjected to a transverse force perpendicular to the direction of flow, which is called Magnus force, showed as figure \ref{fig:magnus}.
+The golf ball rotates continuously around its own axis during its flight. When a fluid flows in the direction perpendicular to this axis, it will be subjected to a transverse force perpendicular to the direction of flow, which is called Magnus force, showed as Figure \ref{fig:magnus}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{figure/Magnus.png}
@@ -333,7 +345,7 @@ It is determined by the golf's surface geometry,velocity,direction and spin rate
 Where C$_L$ is the lift coefficient.
 
 \subsection{Velocity Measurement}
-Let’s assume the flying object is R distance away from the receiving antennas. The numbers of wavelength corresponding to the distance back and forth is:
+Assume the flying object is R distance away from the receiving antennas. The numbers of wavelength corresponding to the distance back and forth is:
 \begin{align}
 n=\frac{2 R}{\lambda}    
 \end{align}
@@ -355,14 +367,14 @@ Rearrange the above equation, we get:
 \begin{align}
 V_{r}=\frac{\lambda}{2} f_{d}=V \cos \Theta
 \end{align}
-The velocity we get above is the radial velocity with angle $\theta$ with respect to the ground. Since the most critical value we need is the initial velocity infinitely approaching the swing point. The angle $\theta$ can be considered as 0 degree (\cite{martin2012evaluation}). That is:
+The velocity shown above is the radial velocity with angle $\theta$ with respect to the ground. Since the most critical value we need is the initial velocity infinitely approaching the swing point. The angle $\theta$ can be considered as 0 degree (\cite{martin2012evaluation}). That is:
 \begin{align}
 V=\frac{\lambda}{2} f_{d}
 \end{align}
 
 
 \subsection{Angle Measurement}
-The main method we used to get angle is phase comparison method, showed as figure \ref{fig:phase}, two antennas in the same direction separated by l meter receive the same ratio signal transmitting through directive antenna. The return signals received have same amplitude but different phases (\cite{li2015simulation}).
+The main method being used to get angle is phase comparison method, showed as Figure \ref{fig:phase}, two antennas in the same direction separated by l meter receive the same ratio signal transmitting through directive antenna. The return signals received have same amplitude but different phases (\cite{li2015simulation}).
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{figure/phase.png}
@@ -391,7 +403,7 @@ Velocity is decomposed into x,y and z axis.
     V_{y}&=V \cdot \sin \theta    
 \end{split}
 \end{align}
-According to the kinematic model and Newton’s second law, analyse the force from x axis , y axis and z axis respectively. In our project, we focus on the effect of gravity and drag force due to the air resistance  (\cite{AirResistanceModels}).\\
+According to the kinematic model and Newton’s second law, analyse the force from x axis , y axis and z axis respectively. In this project, gravity and drag force due to the air resistance are the main factors to consider (\cite{AirResistanceModels}).\\
 
 x axis:\\
 when $v_{x 0}>0$
@@ -561,14 +573,14 @@ The Doppler Effect of CW radars can be used to calculate the velocity of the gol
 V_{r}=\frac{\lambda}{2} f_{d}=V \cos \theta
 \end{align}
 
-In this project, a special 3-dimensions coordinate system with three axes is adopted. X axis represents the left and right space. Z axis represents the front and back space. Y axis represents the up and down space. In this way, the position of the flying ball will involve two angles. One is called azimuth $\theta$ related to x and z axes. The other one is called elevation $\alpha$, the angle between the golf and the horizon, showed as figure. \ref{fig:angle}.
+In this project, a special 3-dimensions coordinate system with three axes is adopted. X axis represents the left and right space. Z axis represents the front and back space. Y axis represents the up and down space. In this way, the position of the flying ball will involve two angles. One is called azimuth $\theta$ related to x and z axes. The other one is called elevation $\alpha$, the angle between the golf and the horizon, showed as Figure \ref{fig:angle}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=10cm]{figure/Angle.png}
     \caption{Azimuth and Elevation}
     \label{fig:angle}
 \end{figure}
-Double radar systems with two antennas are being used. One of the radar is placed horizontally to get the azimuth. And the other one is placed vertically to obtain the elevation. The return signal received by the two antennas in every radar has the same amplitude and different phase, showed as figure \ref{fig:PD}. Like discussed in section 4.3, once the phase difference is obtained, the angle can be obtained by: 
+Double radar systems with two antennas are being used. One of the radar is placed horizontally to get the azimuth. And the other one is placed vertically to obtain the elevation. The return signal received by the two antennas in every radar has the same amplitude and different phase, showed as Figure \ref{fig:PD}. Like discussed in section 4.3, once the phase difference is obtained, the angle can be obtained by: 
 \begin{align}
  \theta=\arcsin \frac{\lambda \Delta \phi}{2 \pi l}   
 \end{align}
@@ -579,14 +591,14 @@ Double radar systems with two antennas are being used. One of the radar is place
     \label{fig:PD}
 \end{figure}
 \subsection{Trajectory Simulation}
-The flying golf ball is mainly affected by gravity, drag force from air resistance, Magnus force and buoyancy, showed as figure \ref{fig:model2} (\cite{martin2012evaluation}). 
+The flying golf ball is mainly affected by gravity, drag force from air resistance, Magnus force and buoyancy, showed as Figure \ref{fig:model2} (\cite{martin2012evaluation}). 
 \begin{figure}[H]
     \centering
     \includegraphics[width=8cm]{figure/KM.png}
     \caption{Kinematics Model of the flying ball}
     \label{fig:model2}
 \end{figure}
-Among them, the strength of Magnus force is related to the rotational speed, difficult to be measured. The magnitude of the buoyancy is two orders smaller than the gravity and drag force, which is usually can be neglected. In this project, we mainly consider the effect of gravity and drag force from air resistance. According the kinematic model, we can get the position at t moment of the flying golf as follow.
+Among them, the strength of Magnus force is related to the rotational speed, difficult to be measured. The magnitude of the buoyancy is two orders smaller than the gravity and drag force, which is usually can be neglected. In this project, the effect of gravity and drag force from air resistance are mainly taken into account. According the kinematic model, the position at t moment of the flying golf can be obtained as follow.
 
 The x position at t moment is given by:
 \begin{align}
@@ -665,7 +677,7 @@ shot.
 As can be seen from Figure \ref{fig:nus}, after NUS is advertised, the front-end device will automatically establish a GAP connection and start GATT. The NUS established by the transmission module contains two UART channels, RX and TX.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{figure/nus.png}
+    \includegraphics[width=0.5\textwidth]{figure/nus.png}
     \caption{NUS of the transmission module}
     \label{fig:nus}
 \end{figure}
@@ -674,14 +686,14 @@ As can be seen from Figure \ref{fig:nus}, after NUS is advertised, the front-end
 Since GATT has a limitation of the maximum transmission unit (MTU) according to Bluetooth, trajectory data must be fragmented to be transmitted. As demonstrated in Figure \ref{fig:mtu}, the MTU of the transmission module is 517 bytes. This value was obtained using nRF Connect, which is a BLE testing tool provided by Nordic Semiconductor.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.3\textwidth]{figure/mtu.png}
+    \includegraphics[width=0.5\textwidth]{figure/mtu.png}
     \caption{MTU of the transmission module}
     \label{fig:mtu}
 \end{figure}
 To reduce transmission time, a simple compression module based on gzip was adopted since gzip is natively supported by Python and C\#. \textcite{gzip} is a compression tool based on Lempel–Ziv coding (LZ77). In the case of transmitting trajectory data, the size and the number of fragments of test data reduced to 40\% of the original data as shown in Figure \ref{fig:compress}. Transmission speed and stability have been greatly improved by the compression module.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{figure/compression.pdf}
+    \includegraphics[width=0.7\textwidth]{figure/compression.pdf}
     \caption{Compression result}
     \label{fig:compress}
 \end{figure}
@@ -690,7 +702,7 @@ To reduce transmission time, a simple compression module based on gzip was adopt
 \subsection{Visualization}
 The front-end application is based on the Unity 3D engine with C\# scripting API. As mentioned in \textcite{unity}, Unity is a cross-platform game engine widely adopted in the area including video game, film and architecture. By adopting the unity engine, it becomes possible to develop an easy-to-use and beautiful graphical interface. The cross-platform nature of this engine enables the front-end application to be compiled to different platforms including iOS, Android, Windows and macOS after simple configuration. The wide use of Unity in the industry has also brought a large number of third-party plug-ins and materials, which has dramatically accelerated the development process of the project. The transmission module of the front-end application is written using the C\# API of Unity to achieve platform independence.
 
-
+\newpage
 \section{Results \& Analysis}
 \subsection{Hardware results and analysis}
 \begin{figure}[H]
@@ -699,56 +711,56 @@ The front-end application is based on the Unity 3D engine with C\# scripting API
     \caption{Amplifying filter simulation result}
      \label{fig:hardware}
 \end{figure}
-the Figure \ref{fig:hardware} contains all the hardware circuit we implemented in the reality,once the radar detect any moving object, the signals represented by various frequency wareforms will go though the amplifying process, adding filter to avoid aliasing and power supply to drive, then successfully transmit the analog signal to digital information across ADC.
-\subsubsection{amplifying filter circuit results analysis}
+The Figure \ref{fig:hardware} contains all the hardware circuit we implemented in the reality,once the radar detect any moving object, the signals represented by various frequency wareforms will go though the amplifying process, adding filter to avoid aliasing and power supply to drive, then successfully transmit the analog signal to digital information across ADC.
+\subsubsection{Amplifying filter circuit results analysis}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/Amplifyingfiltersimulation result.png}
     \caption{Amplifying filter simulation result}
      \label{fig:amplifying}
 \end{figure}
-as shown in plot \ref{fig:amplifying}, aiming for detecting the golf ball speed, the amplifier frequency range is successfully within the period of 230HZ to 13.3KHZ, and the amplifying amount is also between 70dB and 80dB.
+As shown in Figure \ref{fig:amplifying}, aiming for detecting the golf ball speed, the amplifier frequency range is successfully within the period of 230HZ to 13.3KHZ, and the amplifying amount is also between 70dB and 80dB.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/realamplifyingfiltersimulationresult.png}
     \caption{real amplifying filter simulation result}
      \label{fig:amplifying_real}
 \end{figure}
-referring of the COVID-19 restriction, which is the realistic goal for detecting people waving the hand, the amplifier frequency range is successfully adjusted within the period of 15HZ to 1KHZ in figure\ref{fig:amplifying_real}. 
+Referring of the COVID-19 restriction, which is the realistic goal for detecting people waving the hand, the amplifier frequency range is successfully adjusted within the period of 15HZ to 1KHZ in Figure\ref{fig:amplifying_real}. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figure/radar output results1.png}
     \caption{radar output results1}
      \label{fig:radar_output}
 \end{figure}
-figure\ref{fig:radar_output} is the realistic radar output results, as it is shown, the two radar output will stay in a steady state until a moving objects is into its detective zone, and the The closer people are to the radar sensor, the amplitude of the output wave will become larger. Instead of the golf ball, hands become the object, the faster I swing my hands, the larger frequency of the output waveform will have.
-In addition, the two actual waveforms of the radar output are consistent with the theory we calculated. The two waveforms are in the same size because the arm swings at only one speed. The phase difference is due to the different distance between the detected object and the antenna. At the same time, the phase difference is analyzed to obtain angle.
+Figure\ref{fig:radar_output} is the realistic radar output results, as it is shown, the two radar output will stay in a steady state until a moving objects is into its detective zone, and the The closer people are to the radar sensor, the amplitude of the output wave will become larger. Instead of the golf ball, hands become the object, swing hands the faster, the larger frequency of the output waveform will have.
+In addition, the two actual waveforms of the radar output are consistent with the theory calculated. The two waveforms are in the same size because the arm swings at only one speed. The phase difference is due to the different distance between the detected object and the antenna. At the same time, the phase difference is analyzed to obtain angle.
 
 \subsubsection{DC-level shifting circuit results analysis}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{figure/real output of radar signal.png}
 \caption{real output of radar signal}
 \label{fig:radar1}
 \end{figure}
-the picture\ref{fig:radar1}shows the radar output, the positive and negative offset is due to the radar inside circuit, the aim of level shifting is to make the wave voltage range all within 0 to 3.3V.
-\begin{figure}[h]
+Figure \ref{fig:radar1} shows the radar output, the positive and negative offset is due to the radar inside circuit, the aim of level shifting is to make the wave voltage range all within 0 to 3.3V.
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{figure/level shifting simulation result.png}
 \caption{level shifting simulation result}
 \label{fig:SHIFT}
 \end{figure}
-the results shown on picture\ref{fig:radar1} completely prove the effect of the level-shifting circuit, the negative offset can be move upper to above 0V.
+The results shown on Figure \ref{fig:radar1} completely prove the effect of the level-shifting circuit, the negative offset can be move upper to above 0V.
 
 \subsection{Matlab Simulation}
-In this part, we have implemented the kinematic model using Matlab to check  the accuracy of model. The simulation result is showed as figure \ref{fig:matlab}, respectively showing the complete movement trajectory of golf and the prediction results of top view and side view.
+In this part,the kinematic model is implemented using Matlab to check  the accuracy of model. The simulation result is showed as Figure \ref{fig:matlab}, respectively showing the complete movement trajectory of golf and the prediction results of top view and side view.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figure/Matlab.jpg}
     \caption{Trajectory Simulation in Matlab}
     \label{fig:matlab}
 \end{figure}
-The prediction results and error statistics of 20 sets of data are showed as table \ref{5}. The initial values are (Initial velocity/MPH, elevation/degree,Azimuth/degree).
+The prediction results and error statistics of 20 sets of data are showed as Table \ref{5}. The initial values are (Initial velocity/MPH, elevation/degree,Azimuth/degree).
 \begin{table}[H]
 \caption{Prediction Error}
 \label{5}
@@ -795,9 +807,18 @@ Also, the prediction error of the carry and peak is up to 8$\%$. There are two m
 
 
 \section{Conclusions and Recommendations}
+This report describes the design, development and results of testing of the animation visualization system for the golf flight trajectory. 
+In this system, two sets of IVS-565 radars can correctly monitor the Doppler effect of moving objects. Through specially designed amplification, filtering, power supply, level shifter and ADC circuit, the radar signal can be correctly converted into a digital signal that can be read by the Raspberry Pi.
 
+The back-end system equipped on the Raspberry Pi has been proven to run autonomously. The system samples the radar signal at a speed of 20ksps. By adopting the phase-comparison monopulse method, this system can successfully analyse the moving object, and theoretically able to realize the analyse the launch speed and angle of the golf ball.
+By establishing a kinematic model of golf ball characteristics using the analysed data, the flight trajectory of the golf ball can be successfully predicted. Finally, the Bluetooth low energy transmission module can stably transmit the flight trajectory data to a smartphone and present the trajectory to the user in real-time with a multi-angle 3D animation.
 
-\section{Acknowledgements }
+Due to the restrictions, the radar system and the kinematics model are not able to be calibrated with real golf shots. The lack of golf shot data makes each module of the system has to be tested separately. Due to the limited cooperation method, the hardware part was developed separately, which eventually resulted in a larger circuit.
+
+In the future development, through field testing and calibration of the radar and kinematics model for the golf ball, the stability of the system can be guaranteed, the accuracy of the trajectory simulation can be significantly improved, and eventually verify the predicted flight trajectory of the golf ball. Since the front-end visualization application is based on the Unity engine, the application can easily add functionality related to social interaction and can be extended to AR or VR through further development. In addition, by calibrating the system to different objects, the system can theoretically visualize the flight trajectories of other balls.
+
+\section{Acknowledgements}
+We would like to thank Prof. William for giving us the opportunity to complete such an exciting project at this unusual year. Also, we would like to thank the contributors of the open-source software. The software part of the project is based on many open source projects, and the realization of the project is inseparable from the open-source community. Finally, thanks to all of our team members for helping and learning from each other and working together to complete all the work.
 
 \newpage
 \section{References}
